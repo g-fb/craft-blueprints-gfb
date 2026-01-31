@@ -7,15 +7,15 @@ class subinfo( info.infoclass ):
         self.displayName = "MangaReader"
         self.description = "A manga reader for local files. Works with folders and archives (zip, rar, tar, 7z, cbz, cbr, cbt, cb7)."
         self.svnTargets["master"] = "https://github.com/g-fb/mangareader"
-        self.defaultTarget = "2.2.1"
+        self.defaultTarget = "2.3.0"
         
-        for ver in ["2.2.1"]:
+        for ver in ["2.3.0"]:
             self.targets[ver] = f"https://github.com/g-fb/mangareader/archive/refs/tags/{ver}.tar.gz"
             self.targetInstSrc[ver] = f"mangareader-{ver}"
             self.archiveNames[ver] = f"mangareader-{ver}.tar.gz"
 
-        self.targetDigests["2.2.1"] = (["e7804ce8360a478060d8daf0b6389390f7b16140000f2efae56c1b16c6092314"], CraftHash.HashAlgorithm.SHA256)
-        # self.patchToApply["2.2.0"] = [("0001-startupwidget-use-string-literal.patch", 1)]
+        self.targetDigests["2.3.0"] = (["e7804ce8360a478060d8daf0b6389390f7b16140000f2efae56c1b16c6092314"], CraftHash.HashAlgorithm.SHA256)
+        # self.patchToApply["2.3.0"] = [("patch.diff", 1)]
 
     def setDependencies( self ):
         self.buildDependencies["kde/frameworks/extra-cmake-modules"] = None
