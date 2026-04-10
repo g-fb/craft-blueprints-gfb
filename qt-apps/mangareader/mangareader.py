@@ -1,20 +1,21 @@
 import info
-from CraftConfig import *
-from CraftOS.osutils import OsUtils
+from Blueprints.CraftPackageObject import CraftPackageObject
+from CraftCore import CraftCore
+from Utils import CraftHash
 
 class subinfo( info.infoclass ):
     def setTargets( self ):
         self.displayName = "MangaReader"
         self.description = "A manga reader for local files. Works with folders and archives (zip, rar, tar, 7z, cbz, cbr, cbt, cb7)."
         self.svnTargets["master"] = "https://github.com/g-fb/mangareader"
-        self.defaultTarget = "2.3.0"
-        
-        for ver in ["2.3.0"]:
+        self.defaultTarget = "2.4.0"
+
+        for ver in ["2.4.0"]:
             self.targets[ver] = f"https://github.com/g-fb/mangareader/archive/refs/tags/{ver}.tar.gz"
             self.targetInstSrc[ver] = f"mangareader-{ver}"
             self.archiveNames[ver] = f"mangareader-{ver}.tar.gz"
 
-        self.targetDigests["2.3.0"] = (["e7804ce8360a478060d8daf0b6389390f7b16140000f2efae56c1b16c6092314"], CraftHash.HashAlgorithm.SHA256)
+        self.targetDigests["2.4.0"] = (["8c19856110256702563dd1e7513878a4fc4212390b409e7030c7a604f8745834"], CraftHash.HashAlgorithm.SHA256)
         # self.patchToApply["2.3.0"] = [("patch.diff", 1)]
 
     def setDependencies( self ):
@@ -37,10 +38,10 @@ class Package( CMakePackageBase ):
         self.defines["executable"] = "bin\\mangareader.exe"
 
         # mangareader icons
-        self.defines["icon"] = os.path.join(self.packageDir(), "mangareader.ico")
-        self.defines["icon_png"] = os.path.join(self.sourceDir(), "mangareader", "icons", "windows", "150-apps-mangareader.png")
-        self.defines["icon_png_44"] = os.path.join(self.sourceDir(), "mangareader", "icons", "windows", "44-apps-mangareader.png")
-
+        self.defines["icon"] = self.blueprintDir() / "mangareader.ico"
+        self.defines["icon_png"] = self.sourceDir() / "src/data/icons/150-apps-kile.png"
+        self.defines["icon_png"] = self.sourceDir() / "mangareader/icons/windows/150-apps-mangareader.png"
+        self.defines["icon_png_44"] = self.sourceDir() / "mangareader/icons/windows/44-apps-mangareader.png"
 
         self.defines["mimetypes"] = ["application/zip", "application/vnd.comicbook+zip", "application/x-7z-compressed", "application/x-cb7", "application/x-tar", "application/x-cbt", "application/vnd.rar", "application/vnd.comicbook-rar"]
         self.defines["file_types"] = [".zip", ".cbz", ".7z", ".cb7", ".tar", ".cbt", ".rar", ".cbr"]
@@ -48,4 +49,3 @@ class Package( CMakePackageBase ):
         self.ignoredPackages.append("binary/mysql")
 
         return TypePackager.createPackage(self)
- 
